@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/base.css">
+    <script type="text/javascript" src="/js/qrcode/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="/js/qrcode/utf.js"></script>
+</head>
+<body>
+生成二维码....
+<div class="pc_sign_in_box">
+    <div class="pc_sign_in_title">
+        <ul>
+            <li class="title_selected" data-id="1">扫码登录</li>
+            <li data-id="2">账号密码登录</li>
+        </ul>
+    </div>
+    <div class="pc_sign_in_cont">
+        <div class="pc_qr_code">
+            <input type="hidden" id="uuid" value="${uuid}"/>
+        </div>
+        <div id="result">请使用手机扫码</div>
+    </div>
+    <div class="pc_sign_in_input">
+        <div class="pc_sign_in_input_w">
+            <input type="Number" placeholder="手机号码" maxlength="11" id="username" oninput="if(value.length>11)value=value.slice(0,11)" />
+            <input type="password" placeholder="密码" maxlength="15" id="password" />
+        </div>
+        <p style="color:red;" class="test_sign_in">手机号输入有误，请重新输入</p>
+        <div class="sign_btn">
+            <button type="button" id="sign_btn">登 录</button>
+        </div>
+    </div>
+    <div class="footer_cont">
+        <ul>
+            <li>下载app</li>
+            <li>立即注册</li>
+        </ul>
+    </div>
+</div>
+</body>
+<script>
+$(document).ready(function () {
+    $(window).load(function(){
+        $(".pc_sign_in_box").addClass("bounce-in-down");
+    })
+
+    $(".pc_sign_in_title ul li").on("click",function(){
+        $(this).parents(".pc_sign_in_title").find("ul li").removeClass("title_selected");
+        $(this).addClass("title_selected");
+        if($(this).attr("data-id") == "1"){
+            $(".pc_sign_in_cont").show();
+            $(".pc_sign_in_input").hide();
+        }else{
+            $(".pc_sign_in_cont").hide();
+            $(".pc_sign_in_input").show();
+        }
+    })
+    function testSign(showText){
+        $(".test_sign_in").css({
+            "visibility":"visible"
+        }).html(showText);
+    }
+     /*注意不要把val放这，因为不是发生事件的，没有值*/
+    $("#sign_btn").on("click",function () { 
+        var username=$("#username").val();
+        var password=$("#password").val();
+        console.log('enter click'+username+password);
+        if (username==null) {
+            return;
+        }
+        var data={username,password};
+        console.log('data'+username+password);
+        $.post("/login", data,
+            function (json, textStatus, jqXHR) {
+                console.log('json status'+json.status);
+                if(json.status== '200'){
+                    window.location.href ="/success.html";
+                }else{
+                    errorBombBox(msg.message);//调报错弹框
+                }
+            },"json" /*不写也是json*/
+        );
+     });
+
+
+
+});
+
+       
+</script>
+</html>
