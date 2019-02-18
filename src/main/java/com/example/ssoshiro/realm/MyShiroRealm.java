@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-//@Component
+@Component
 public class MyShiroRealm extends AuthorizingRealm {
     /**
           * 授权
@@ -33,11 +33,12 @@ public class MyShiroRealm extends AuthorizingRealm {
         permissionSet.add("权限添加");
         permissionSet.add("权限删除");
         info.setStringPermissions(permissionSet);
+
          return info;
     }
     /**
-     * 认证
-     */
+           * 认证
+           */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token= (UsernamePasswordToken) authenticationToken;
