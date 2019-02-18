@@ -33,12 +33,12 @@ public class AppShiroConfig {
         bean.setLoginUrl("/login.html");//当此用户是一个非认证用户,需要先登陆进行认证
         Map<String, String> map=new LinkedHashMap<>();//必须有序
        // map.put("/static/**", "anon");//anon表示允许匿名访问，但static这部不好使，后来发现springboot默认把所有的静态资源都映射到static目录了
-        map.put("/image/**", "anon");//img
-        map.put("/css/**", "anon");//css
-        map.put("/js/**", "anon");//js
-        map.put("/index", "anon");//注意不是.html
-        map.put("/", "anon");
-        map.put("/login","anon");
+        map.put("/image/**","anon");//img
+        map.put("/css/**","anon");//css
+        map.put("/js/**","anon");//js
+        map.put("/index","anon");//注意不是.html
+        map.put("/","anon");//
+        map.put("/login","anon");//
         //bean.setLoginUrl("/login.html");
         map.put("/**", "authc");//必须授权才能访问
         bean.setFilterChainDefinitionMap(map);
