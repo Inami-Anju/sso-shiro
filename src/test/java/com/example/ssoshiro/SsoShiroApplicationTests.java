@@ -16,10 +16,10 @@ public class SsoShiroApplicationTests {
     UserMapper userMapper;
     @Test
     public void contextLoads() {
-        QueryWrapper<User> wrapper=new QueryWrapper();
-        wrapper.eq("id", "1");
-        final Object o = userMapper.selectOne(wrapper);
-        System.out.println(o);
+        User user=new User();
+        QueryWrapper<User> queryWrapper = new QueryWrapper<User>(user);
+        User userDB = (User) userMapper.selectOne(queryWrapper);
+        System.out.println(userDB);
     }
 
 }
