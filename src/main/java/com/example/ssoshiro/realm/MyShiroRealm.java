@@ -1,12 +1,16 @@
 package com.example.ssoshiro.realm;
 
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.ssoshiro.common.User;
+import com.example.ssoshiro.dao.UserMapper;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -14,11 +18,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-//@Component
+@Component
 public class MyShiroRealm extends AuthorizingRealm {
+    @Autowired
+    UserMapper userMapper;
     /**
-          * 授权
-          */
+     * 授权
+     */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         //获取用户
@@ -42,6 +48,9 @@ public class MyShiroRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token= (UsernamePasswordToken) authenticationToken;
         String username=token.getUsername();
+        QueryWrapper<User> wrapper=new QueryWrapper();
+
+        //userMapper.selectOne();
         String password=String.valueOf(token.getPassword());
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("nickname", username);
