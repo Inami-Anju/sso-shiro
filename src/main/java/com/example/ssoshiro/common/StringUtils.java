@@ -7,7 +7,7 @@ public class StringUtils {
         if ("".trim().equals(str)||str==null){
             return false;
         }else {
-            return true;
+            return true;//测试冲突
         }
     }
 }
